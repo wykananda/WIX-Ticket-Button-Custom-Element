@@ -6,7 +6,10 @@ class TicketButton extends HTMLElement {
 
     connectedCallback() {
         const buttonText = this.getAttribute('text') || 'BOOK NOW!';
-
+        const backgroundColor = this.getAttribute('background-color') || '#d8c3a5';
+        const color = this.getAttribute('color') || '#3e2723';
+        const fontSize = this.getAttribute('font-size') || '26px';
+        const fontFamily = this.getAttribute('font-family') || '"Courier New", Courier, monospace, serif';
         const content = `
             <style>
                 /* Core Ticket Button Styling */
@@ -16,11 +19,11 @@ class TicketButton extends HTMLElement {
                     justify-content: center;
                     width: 100%;
                     height: 100%; 
-                    background-color: #d8c3a5; /* Old-fashioned paper color */
-                    color: #3e2723; /* Dark brown rustic text */
-                    font-family: "Courier New", Courier, monospace, serif;
+                    background-color: ${backgroundColor}; /* Old-fashioned paper color */
+                    color: ${color}; /* Dark brown rustic text */
+                    font-family: ${fontFamily};
                     font-weight: bold;
-                    font-size: 26px;
+                    font-size: ${fontSize};
                     /*text-transform: uppercase;*/
                     text-decoration: none;
                     letter-spacing: 2px;
