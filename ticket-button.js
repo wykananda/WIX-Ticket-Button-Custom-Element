@@ -1,19 +1,12 @@
 class TicketButton extends HTMLElement {
     constructor() {
         super();
-        this.hasShadow = false;
-
-        try {
-            // Try attaching the Shadow DOM (works on the live site)
-            this.attachShadow({ mode: 'open' });
-            this.hasShadow = true;
-        } catch (e) {
-            // If the editor sandbox blocks attachShadow, we fail gracefully
-            console.warn("Shadow DOM blocked. Falling back to Light DOM rendering.");
-        }
+        this.attachShadow({ mode: 'open' });
     }
 
     connectedCallback() {
+        const buttonText = this.getAttribute('text') || 'BOOK NOW!';
+
         const content = `
             <style>
                 /* Core Ticket Button Styling */
@@ -28,7 +21,7 @@ class TicketButton extends HTMLElement {
                     font-family: "Courier New", Courier, monospace, serif;
                     font-weight: bold;
                     font-size: 26px;
-                    text-transform: uppercase;
+                    /*text-transform: uppercase;*/
                     text-decoration: none;
                     letter-spacing: 2px;
                     border: 3px double #8e7f70;
@@ -77,15 +70,15 @@ class TicketButton extends HTMLElement {
                     transform: translateY(1px);
                 }
             </style>
-            <button class="ticket-btn">Book Now!</button>
+            <button class="ticket-btn">${buttonText}</button>
         `;
 
-        if (this.hasShadow) {
             // Live Site Rendering
             this.shadowRoot.innerHTML = content;
             
             // Wire up your Velo event listeners
             const button = this.shadowRoot.querySelector('.ticket-btn');
+
             button.addEventListener('click', (e) => {
                 e.preventDefault();
                 this.dispatchEvent(new CustomEvent('ticketClicked', {
@@ -93,11 +86,6 @@ class TicketButton extends HTMLElement {
                     composed: true
                 }));
             });
-        } else {
-            // Editor / Sandbox Fallback (Renders directly in the Light DOM)
-            this.innerHTML = '<br/><br/><br/>Book Now!';
-            console.log('rendered non-shadow dom');
-        }
     }
 }
 
